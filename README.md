@@ -10,15 +10,12 @@ Copyright (c) 2017 Nicholas Benge
 * ファー(もふもふ)
 * Stencil(窓枠)
 
-
-
-
 ファーは下のやつなど参考に実装
-* ファーシェーダを移植してみた(ファーシェーダー作成時に参考)
+* ファーシェーダを移植してみた(ファーシェーダー作成時に参考)  
 <https://qiita.com/edo_m18/items/75db04f117355adcadbb>
 
 Stencilは以下を参考、Windowについてはほぼコピペ 
-* HoloLens Playground
-<http://tips.hecomi.com/entry/2017/02/18/190949>
-<https://github.com/hecomi/HoloLensPlayground>
+* HoloLens Playground  
+<http://tips.hecomi.com/entry/2017/02/18/190949>  
+<https://github.com/hecomi/HoloLensPlayground>  
 Copyright (c) 2017 hecomi
