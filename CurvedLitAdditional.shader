@@ -1,4 +1,4 @@
-Shader "A3/CurvedLit"
+Shader "A3/CurvedLitAdditional"
 {
 	Properties
 	{
@@ -39,12 +39,14 @@ Shader "A3/CurvedLit"
 		_RimColor( "Rim Color", Color ) = ( 1.0, 1.0, 1.0, 1.0 )
 		_RimPower( "Rim Power", Range( 0, 10.0 )) = 3.0
 		_RimLightTex ("Rim Tex", 2D) = "white" {}
+		_AdditionalTex ("Additional Tex", 2D) = "white" {}
+		_AdditionalMask ("Additional Mask", 2D) = "white" {}
 
 		// Blending state
-		_Mode ("__mode", Float) = 0.0
-		_SrcBlend ("__src", Float) = 1.0
-		_DstBlend ("__dst", Float) = 0.0
-		_ZWrite ("__zw", Float) = 1.0
+		[HideInInspector] _Mode ("__mode", Float) = 0.0
+		[HideInInspector] _SrcBlend ("__src", Float) = 1.0
+		[HideInInspector] _DstBlend ("__dst", Float) = 0.0
+		[HideInInspector] _ZWrite ("__zw", Float) = 1.0
 	}
 
 	SubShader
@@ -62,6 +64,7 @@ Shader "A3/CurvedLit"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_ADDITIONAL
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_REFLECTION

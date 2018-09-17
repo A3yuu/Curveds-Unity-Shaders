@@ -1,4 +1,4 @@
-Shader "A3/CurvedLitFur"
+Shader "A3/CurvedLitHair"
 {
 	Properties
 	{
@@ -30,24 +30,26 @@ Shader "A3/CurvedLitFur"
 		_HighLightColor( "HighLight Color", Color ) = ( 1.0, 1.0, 1.0, 1.0 )
 		_HighLightPower( "HighLight Power", Range( 0, 10.0 )) = 1.0
 		_HighLightTex ("HighLight Tex", 2D) = "white" {}
+		[Toggle(_USE_HAIRLIGHT)]
+		_UseHairLight("Use HairLight", Float) = 0
+		_HairLightColor( "HairLight Color", Color ) = ( 1.0, 1.0, 1.0, 1.0 )
+		_HairLightTex ("HairLight Tex", 2D) = "white" {}
+		_HairHightNum( "HairHight Num", Range( 0, 10.0 )) = 1.0
+		_HairHightTex ("HairHight Tex", 2D) = "white" {}
+		_HairHightTex2 ("HairHight Tex2", 2D) = "white" {}
+		_HairCut( "HairCut", Range( 0, 1.0 )) = 0.0
+		_HairWind( "HairWind", Range( 0, 10.0 )) = 1.0
 		[Toggle(_USE_RIM)]
 		_UseRim("Use Rim", Float) = 0
 		_RimColor( "Rim Color", Color ) = ( 1.0, 1.0, 1.0, 1.0 )
 		_RimPower( "Rim Power", Range( 0, 10.0 )) = 3.0
-		_RimLightMask ("Rim Mask", 2D) = "white" {}
-		_FurMap  ("FurMap", 2D) = "white" {}
-		[Toggle(_USE_FURTEX)]
-		_UseFurTex("Use FurTex", Float) = 0
-		_FurTex  ("FurTex", 2D) = "white" {}
-		_FurGravity ("FurGravity", Vector) = (0.0, 9.8, 0.0, 0.0)
-		_FurLength ("FurLength", Range(0, 1)) = 0.03
-		_FurFact ("FurFact", Range(0, 10)) = 1
+		_RimLightTex ("Rim Tex", 2D) = "white" {}
 
 		// Blending state
-		[HideInInspector] _Mode ("__mode", Float) = 0.0
-		[HideInInspector] _SrcBlend ("__src", Float) = 1.0
-		[HideInInspector] _DstBlend ("__dst", Float) = 0.0
-		[HideInInspector] _ZWrite ("__zw", Float) = 1.0
+		_Mode ("__mode", Float) = 0.0
+		_SrcBlend ("__src", Float) = 1.0
+		_DstBlend ("__dst", Float) = 0.0
+		_ZWrite ("__zw", Float) = 1.0
 	}
 
 	SubShader
@@ -65,7 +67,6 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_REFLECTION
@@ -73,7 +74,8 @@ Shader "A3/CurvedLitFur"
 			#pragma shader_feature _USE_EMISSION
 			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
+			#pragma shader_feature _USE_HAIRLIGHT
+			#define _USE_HAIRHIGHT 0
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -92,7 +94,6 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0.1
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_REFLECTION
@@ -100,7 +101,8 @@ Shader "A3/CurvedLitFur"
 			#pragma shader_feature _USE_EMISSION
 			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
+			#pragma shader_feature _USE_HAIRLIGHT
+			#define _USE_HAIRHIGHT 0.2
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -119,7 +121,6 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0.2
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_REFLECTION
@@ -127,7 +128,8 @@ Shader "A3/CurvedLitFur"
 			#pragma shader_feature _USE_EMISSION
 			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
+			#pragma shader_feature _USE_HAIRLIGHT
+			#define _USE_HAIRHIGHT 0.4
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -146,7 +148,6 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0.3
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_REFLECTION
@@ -154,7 +155,8 @@ Shader "A3/CurvedLitFur"
 			#pragma shader_feature _USE_EMISSION
 			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
+			#pragma shader_feature _USE_HAIRLIGHT
+			#define _USE_HAIRHIGHT 0.6
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -173,7 +175,6 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0.4
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_REFLECTION
@@ -181,7 +182,8 @@ Shader "A3/CurvedLitFur"
 			#pragma shader_feature _USE_EMISSION
 			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
+			#pragma shader_feature _USE_HAIRLIGHT
+			#define _USE_HAIRHIGHT 0.8
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -200,7 +202,6 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0.5
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_REFLECTION
@@ -208,7 +209,8 @@ Shader "A3/CurvedLitFur"
 			#pragma shader_feature _USE_EMISSION
 			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
+			#pragma shader_feature _USE_HAIRLIGHT
+			#define _USE_HAIRHIGHT 1
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -219,142 +221,7 @@ Shader "A3/CurvedLitFur"
 			#pragma multi_compile_fog
 			ENDCG
 		}
-		Pass
-		{
-			Name "FORWARD"
-			Tags { "LightMode" = "ForwardBase" }
-			Blend [_SrcBlend] [_DstBlend]
-			ZWrite [_ZWrite]
-			Cull [_Cull]
-			CGPROGRAM
-			#define _FURNUM 0.6
-			#pragma shader_feature _USE_NORMALMAP
-			#pragma shader_feature _USE_COLORMASK
-			#pragma shader_feature _USE_REFLECTION
-			#pragma shader_feature _USE_INDIRECTLIGHTING
-			#pragma shader_feature _USE_EMISSION
-			#pragma shader_feature _USE_RIM
-			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
-			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-			#include "CurvedLitCore.cginc"
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
-			#pragma multi_compile_fwdbase
-			#pragma multi_compile_fog
-			ENDCG
-		}
-		Pass
-		{
-			Name "FORWARD"
-			Tags { "LightMode" = "ForwardBase" }
-			Blend [_SrcBlend] [_DstBlend]
-			ZWrite [_ZWrite]
-			Cull [_Cull]
-			CGPROGRAM
-			#define _FURNUM 0.7
-			#pragma shader_feature _USE_NORMALMAP
-			#pragma shader_feature _USE_COLORMASK
-			#pragma shader_feature _USE_REFLECTION
-			#pragma shader_feature _USE_INDIRECTLIGHTING
-			#pragma shader_feature _USE_EMISSION
-			#pragma shader_feature _USE_RIM
-			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
-			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-			#include "CurvedLitCore.cginc"
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
-			#pragma multi_compile_fwdbase
-			#pragma multi_compile_fog
-			ENDCG
-		}
-		Pass
-		{
-			Name "FORWARD"
-			Tags { "LightMode" = "ForwardBase" }
-			Blend [_SrcBlend] [_DstBlend]
-			ZWrite [_ZWrite]
-			Cull [_Cull]
-			CGPROGRAM
-			#define _FURNUM 0.8
-			#pragma shader_feature _USE_NORMALMAP
-			#pragma shader_feature _USE_COLORMASK
-			#pragma shader_feature _USE_REFLECTION
-			#pragma shader_feature _USE_INDIRECTLIGHTING
-			#pragma shader_feature _USE_EMISSION
-			#pragma shader_feature _USE_RIM
-			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
-			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-			#include "CurvedLitCore.cginc"
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
-			#pragma multi_compile_fwdbase
-			#pragma multi_compile_fog
-			ENDCG
-		}
-		Pass
-		{
-			Name "FORWARD"
-			Tags { "LightMode" = "ForwardBase" }
-			Blend [_SrcBlend] [_DstBlend]
-			ZWrite [_ZWrite]
-			Cull [_Cull]
-			CGPROGRAM
-			#define _FURNUM 0.9
-			#pragma shader_feature _USE_NORMALMAP
-			#pragma shader_feature _USE_COLORMASK
-			#pragma shader_feature _USE_REFLECTION
-			#pragma shader_feature _USE_INDIRECTLIGHTING
-			#pragma shader_feature _USE_EMISSION
-			#pragma shader_feature _USE_RIM
-			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
-			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-			#include "CurvedLitCore.cginc"
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
-			#pragma multi_compile_fwdbase
-			#pragma multi_compile_fog
-			ENDCG
-		}
-		Pass
-		{
-			Name "FORWARD"
-			Tags { "LightMode" = "ForwardBase" }
-			Blend [_SrcBlend] [_DstBlend]
-			ZWrite [_ZWrite]
-			Cull [_Cull]
-			CGPROGRAM
-			#define _FURNUM 1
-			#pragma shader_feature _USE_NORMALMAP
-			#pragma shader_feature _USE_COLORMASK
-			#pragma shader_feature _USE_REFLECTION
-			#pragma shader_feature _USE_INDIRECTLIGHTING
-			#pragma shader_feature _USE_EMISSION
-			#pragma shader_feature _USE_RIM
-			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_FURTEX
-			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-			#include "CurvedLitCore.cginc"
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
-			#pragma multi_compile_fwdbase
-			#pragma multi_compile_fog
-			ENDCG
-		}
-		
+
 		Pass
 		{
 			Name "FORWARD_DELTA"
@@ -362,11 +229,11 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_HIGHLIGHT
+			#define _USE_HAIRHIGHT 0
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -384,11 +251,11 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0.1
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_HIGHLIGHT
+			#define _USE_HAIRHIGHT 0.2
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -406,11 +273,11 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0.2
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_HIGHLIGHT
+			#define _USE_HAIRHIGHT 0.4
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -428,11 +295,11 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0.3
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_HIGHLIGHT
+			#define _USE_HAIRHIGHT 0.6
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -450,11 +317,11 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0.4
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_HIGHLIGHT
+			#define _USE_HAIRHIGHT 0.8
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -472,121 +339,11 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
-			#define _FURNUM 0.5
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_COLORMASK
 			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-			#include "CurvedLitCore.cginc"
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
-			#pragma multi_compile_fwdadd_fullshadows
-			#pragma multi_compile_fog
-			ENDCG
-		}
-		Pass
-		{
-			Name "FORWARD_DELTA"
-			Tags { "LightMode" = "ForwardAdd" }
-			Blend [_SrcBlend] One
-			Cull [_Cull]
-			CGPROGRAM
-			#define _FURNUM 0.6
-			#define _PASS_FORWARDADD
-			#pragma shader_feature _USE_NORMALMAP
-			#pragma shader_feature _USE_COLORMASK
-			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-			#include "CurvedLitCore.cginc"
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
-			#pragma multi_compile_fwdadd_fullshadows
-			#pragma multi_compile_fog
-			ENDCG
-		}
-		Pass
-		{
-			Name "FORWARD_DELTA"
-			Tags { "LightMode" = "ForwardAdd" }
-			Blend [_SrcBlend] One
-			Cull [_Cull]
-			CGPROGRAM
-			#define _FURNUM 0.7
-			#define _PASS_FORWARDADD
-			#pragma shader_feature _USE_NORMALMAP
-			#pragma shader_feature _USE_COLORMASK
-			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-			#include "CurvedLitCore.cginc"
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
-			#pragma multi_compile_fwdadd_fullshadows
-			#pragma multi_compile_fog
-			ENDCG
-		}
-		Pass
-		{
-			Name "FORWARD_DELTA"
-			Tags { "LightMode" = "ForwardAdd" }
-			Blend [_SrcBlend] One
-			Cull [_Cull]
-			CGPROGRAM
-			#define _FURNUM 0.8
-			#define _PASS_FORWARDADD
-			#pragma shader_feature _USE_NORMALMAP
-			#pragma shader_feature _USE_COLORMASK
-			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-			#include "CurvedLitCore.cginc"
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
-			#pragma multi_compile_fwdadd_fullshadows
-			#pragma multi_compile_fog
-			ENDCG
-		}
-		Pass
-		{
-			Name "FORWARD_DELTA"
-			Tags { "LightMode" = "ForwardAdd" }
-			Blend [_SrcBlend] One
-			Cull [_Cull]
-			CGPROGRAM
-			#define _FURNUM 0.9
-			#define _PASS_FORWARDADD
-			#pragma shader_feature _USE_NORMALMAP
-			#pragma shader_feature _USE_COLORMASK
-			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
-			#include "CurvedLitCore.cginc"
-			#pragma vertex vert
-			#pragma fragment frag
-			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
-			#pragma multi_compile_fwdadd_fullshadows
-			#pragma multi_compile_fog
-			ENDCG
-		}
-		Pass
-		{
-			Name "FORWARD_DELTA"
-			Tags { "LightMode" = "ForwardAdd" }
-			Blend [_SrcBlend] One
-			Cull [_Cull]
-			CGPROGRAM
-			#define _FURNUM 1
-			#define _PASS_FORWARDADD
-			#pragma shader_feature _USE_NORMALMAP
-			#pragma shader_feature _USE_COLORMASK
-			#pragma shader_feature _USE_HIGHLIGHT
+			#define _USE_HAIRHIGHT 1
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert

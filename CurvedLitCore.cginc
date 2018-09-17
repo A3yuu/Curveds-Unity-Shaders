@@ -10,6 +10,7 @@ uniform sampler2D _EmissionMap; uniform float4 _EmissionMap_ST;
 uniform sampler2D _NormalMap; uniform float4 _NormalMap_ST;
 uniform sampler2D _RimLightTex; uniform float4 _RimLightTex_ST;
 uniform sampler2D _HighLightTex; uniform float4 _HighLightTex_ST;
+uniform sampler2D _HairLightTex; uniform float4 _HairLightTex_ST;
 
 uniform float4 _Color;
 uniform float _Shadow;
@@ -23,12 +24,29 @@ uniform float _RimPower;
 uniform float4 _RimColor;
 uniform float _HighLightPower;
 uniform float4 _HighLightColor;
+uniform float4 _HairLightColor;
+
+#ifdef _USE_HAIRHIGHT
+uniform sampler2D _HairHightTex; uniform float4 _HairHightTex_ST;
+uniform sampler2D _HairHightTex2; uniform float4 _HairHightTex2_ST;
+uniform float _HairHightNum;
+uniform float _HairCut;
+uniform float _HairWind;
+#endif
 
 #ifdef _FURNUM
-uniform sampler2D _FurTex;
+uniform sampler2D _FurMap;
+#ifdef _USE_FURTEX
+uniform sampler2D _FurTex; uniform float4 _FurTex_ST;
+#endif
 uniform float4 _FurGravity;
 uniform float _FurLength;
 uniform float _FurFact;
+#endif
+
+#ifdef _USE_ADDITIONAL
+uniform sampler2D _AdditionalTex; uniform float4 _AdditionalTex_ST;
+uniform sampler2D _AdditionalMask; uniform float4 _AdditionalMask_ST;
 #endif
 
 static const half3 grayscale_vector = half3(0.298912, 0.586611, 0.114478);
@@ -40,6 +58,8 @@ struct VertexOutput
 	float2 uv1 : TEXCOORD1;
 	float4 posWorld : TEXCOORD2;
 	float3 normalDir : TEXCOORD3;
+	float3 tangentDir : TEXCOORD4;
+	float3 bitangentDir : TEXCOORD5;
 	float4 col : COLOR;
 	SHADOW_COORDS(6)
 	UNITY_FOG_COORDS(7)
@@ -49,10 +69,17 @@ VertexOutput vert(appdata_full v) {
 	VertexOutput o;
 	o.uv0 = v.texcoord;
 	o.normalDir = UnityObjectToWorldNormal(v.normal);
+	o.tangentDir = normalize(mul(unity_ObjectToWorld, float4(v.tangent.xyz, 0.0)).xyz);
+	o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);
 	o.posWorld = mul(unity_ObjectToWorld, v.vertex);
 	#ifdef _FURNUM
 	o.uv1 = v.texcoord * _FurFact;
 	float4 vertex  = float4(v.vertex.xyz + normalize(normalize(v.normal) + _FURNUM * (1 - _FURNUM * 0.5) * _FurGravity.xyz) * _FURNUM * _FurLength, 1.0);
+	o.pos = UnityObjectToClipPos(vertex);
+	#elif defined (_USE_HAIRHIGHT)
+	float hairHight = tex2Dlod(_HairHightTex, v.texcoord).r * _USE_HAIRHIGHT * _HairHightNum;
+	float3 hairNormalAdder = _SinTime.x * normalize(v.tangent.xyz) + _CosTime.x * normalize(cross(v.normal.xyz, v.tangent.xyz));
+	float4 vertex  = float4(v.vertex.xyz + (normalize(v.normal) + hairNormalAdder * _HairWind) * hairHight, 1.0);
 	o.pos = UnityObjectToClipPos(vertex);
 	#else
 	o.uv1 = v.texcoord;
@@ -68,7 +95,15 @@ float4 frag(VertexOutput i) : COLOR
 {
 	//Fur
 	#ifdef _FURNUM
-	if (tex2D(_FurTex, i.uv1).r < _FURNUM) {
+	if (tex2D(_FurMap, i.uv1).r < _FURNUM) {
+		discard;
+	}
+	#endif
+	
+	//HairHight
+	#ifdef _USE_HAIRHIGHT
+	float hairHight = tex2D(_HairHightTex2, i.uv0).r;
+	if (hairHight < _USE_HAIRHIGHT || hairHight < _HairCut) {
 		discard;
 	}
 	#endif
@@ -79,6 +114,11 @@ float4 frag(VertexOutput i) : COLOR
 	float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - objPos);
 	float3 normalDirection = normalize(i.normalDir);
 	float3 lightDirection = lerp(float3(0.0, 1.0, 0.0), lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - objPos, _WorldSpaceLightPos0.w), any(_WorldSpaceLightPos0.xyz));
+
+	#ifdef _USE_FURTEX
+	float4 furColor = tex2D(_FurTex,TRANSFORM_TEX(i.uv0, _FurTex));
+	baseColor = baseColor * (1-_FURNUM) + furColor * _FURNUM;
+	#endif
 
 	//Normal
 	#if defined(_USE_NORMALMAP)
@@ -119,6 +159,26 @@ float4 frag(VertexOutput i) : COLOR
 	float3 highLightDirection = normalize(viewDirection + lightDirection);
 	float highLight = pow(dot(normalDirection, highLightDirection)*0.5+0.5, pow(2, _HighLightPower));
 	highLighting = _HighLightTex_var * highLight * _HighLightColor.rgb;
+	//highLighting = highLight * _HighLightColor.rgb;
+	#endif
+	
+	float3 hairLighting = 0;
+	#ifdef _USE_HAIRLIGHT
+	//float3 hairLightDirection = normalize(viewDirection + lightDirection);
+	//float normalDirectionRate = dot(normalDirection, lightDirection);
+	//float hairLightDirectionRate = dot(hairLightDirection, lightDirection);
+	//float3 viewRot = normalize(cross(lightDirection, viewDirection));
+	//float3 normalRot = normalize(cross(lightDirection, normalDirection));
+	//float hairX = dot(viewRot, normalRot)*0.5+0.5;
+	//float hairY = saturate((normalDirectionRate-hairLightDirectionRate)*0.5+0.5);
+	//float4 _HairLightTex_var = tex2D(_HairLightTex,TRANSFORM_TEX(float2(hairX,hairY), _HairLightTex));
+	//hairLighting = _HairLightTex_var * _HairLightColor.rgb;
+	float3 hairLightDirection = normalize(viewDirection + lightDirection);
+	float normalDirectionRate = dot(normalDirection, lightDirection);
+	float hairLightDirectionRate = dot(hairLightDirection, lightDirection);
+	float hairY = saturate((normalDirectionRate-hairLightDirectionRate)*0.5+0.5);
+	float4 _HairLightTex_var = tex2D(_HairLightTex,TRANSFORM_TEX(float2(0,hairY), _HairLightTex));
+	hairLighting = _HairLightTex_var * _HairLightColor.rgb;
 	#endif
 
 	//Rim
@@ -164,11 +224,21 @@ float4 frag(VertexOutput i) : COLOR
 	float3 lighting = lerp(indirectLighting, directLighting, directContribution);
 	#endif
 
+	//Additional
+	#ifdef _USE_ADDITIONAL
+	float2 additionalPos = float2(i.uv0.x,i.uv0.y - _Time.x*0.5);
+	float3 _AdditionalTex_var = tex2D(_AdditionalTex,TRANSFORM_TEX(additionalPos, _AdditionalTex));
+	float _AdditionalMask_var = tex2D(_AdditionalMask,TRANSFORM_TEX(i.uv0, _AdditionalMask));
+	float3 additional = _AdditionalTex_var * _AdditionalMask_var;
+	//if(additional < 0.1)additional=0;
+	if(dot(additional, grayscale_vector) > dot(baseColor.xyz, grayscale_vector))baseColor.xyz = additional;
+	#endif
+
 	//Fin
-	float3 finalColor = emissive + (baseColor + rimLighting + highLighting) * lighting;
+	float3 finalColor = emissive + (baseColor + rimLighting + highLighting + hairLighting) * lighting;
 	fixed4 finalRGBA = fixed4(finalColor * lightmap, baseColor.a);
+
 	UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
-	
 	return finalRGBA;
 }
 
