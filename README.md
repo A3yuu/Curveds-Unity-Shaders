@@ -9,6 +9,10 @@ Copyright (c) 2017 Nicholas Benge
 * ハイライト(反射光)
 * ファー(もふもふ)
 * Stencil(窓枠)
+以下2019年1/1追加分
+* Tessellation(メッシュ細かく)
+* 自アバター用実装その1~4(Additional***)
+* 自アバター用実装髪用(Hair)
 
 IndirectLightingあたりの実装とか見るととってもなごってるはず。  
 代表的な削った機能としては、アウトライン(つらい)、Trans/Fade(Zバッファでやるやつって半透明無理だよね･･･)
@@ -22,3 +26,5 @@ Stencilは以下などを参考、Windowについてはほぼコピペ
 <http://tips.hecomi.com/entry/2017/02/18/190949>  
 <https://github.com/hecomi/HoloLensPlayground>  
 Copyright (c) 2017 hecomi
+
+コード参考にするなら、一つ前のが見やすいかも？

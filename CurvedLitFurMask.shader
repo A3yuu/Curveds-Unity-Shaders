@@ -1,7 +1,13 @@
-Shader "A3/CurvedLitFur"
+Shader "A3/CurvedLitFurMask"
 {
 	Properties
 	{
+		_Mask ("Mask", Int) = 1
+		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 8
+		[Enum(UnityEngine.Rendering.StencilOp)] _Pass ("Pass", Int) = 2
+		[Enum(UnityEngine.Rendering.StencilOp)] _Fail ("Fail", Int) = 0
+		[Enum(UnityEngine.Rendering.StencilOp)] _ZFail ("ZFail", Int) = 0
+		[Space]
 		[Enum(UnityEngine.Rendering.CullMode)] _Cull("Culling", Int) = 2
 		_MainTex("MainTex", 2D) = "white" {}
 		_Color("Color", Color) = (1,1,1,1)
@@ -64,10 +70,19 @@ Shader "A3/CurvedLitFur"
 		Tags
 		{
 			"RenderType" = "Opaque"
+			"Queue" = "Transparent+3"
 		}
 
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -94,6 +109,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -120,6 +143,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -146,6 +177,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -172,6 +211,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -198,6 +245,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -224,6 +279,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -250,6 +313,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -276,6 +347,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -302,6 +381,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -328,6 +415,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -355,6 +450,14 @@ Shader "A3/CurvedLitFur"
 		
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
@@ -376,6 +479,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
@@ -397,6 +508,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
@@ -418,6 +537,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
@@ -439,6 +566,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
@@ -460,6 +595,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
@@ -481,6 +624,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
@@ -502,6 +653,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
@@ -523,6 +682,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
@@ -544,6 +711,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
@@ -565,6 +740,14 @@ Shader "A3/CurvedLitFur"
 		}
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One

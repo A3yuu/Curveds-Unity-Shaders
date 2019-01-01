@@ -1,13 +1,7 @@
-Shader "A3/CurvedLitStencil"
+Shader "A3/Tessellation/CurvedLitAdditional"
 {
 	Properties
 	{
-		_Mask ("Mask", Int) = 1
-		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 0
-		[Enum(UnityEngine.Rendering.StencilOp)] _Pass ("Pass", Int) = 2
-		[Enum(UnityEngine.Rendering.StencilOp)] _Fail ("Fail", Int) = 0
-		[Enum(UnityEngine.Rendering.StencilOp)] _ZFail ("ZFail", Int) = 0
-		[Space]
 		[Enum(UnityEngine.Rendering.CullMode)] _Cull("Culling", Int) = 2
 		_MainTex("MainTex", 2D) = "white" {}
 		_Color("Color", Color) = (1,1,1,1)
@@ -50,6 +44,14 @@ Shader "A3/CurvedLitStencil"
 		_RimPower( "Rim Power", Range( 0, 10.0 )) = 3.0
 		_RimLightTex ("Rim Tex", 2D) = "white" {}
 		[Space]
+		_TessStrong("Tess Strong",Range( 0, 2 )) = 1
+		_TessDistMin("Tess Dist Min",Float) = 0.2
+		_TessDistMax("Tess Dist Max",Float) = 2
+		_TessFactor("Tess Factor",Range( 0, 64 )) = 16
+		[Space]
+		_AdditionalTex ("Additional Tex", 2D) = "white" {}
+		_AdditionalMask ("Additional Mask", 2D) = "white" {}
+		[Space]
 		// Blending state
 		_Mode ("__mode", Float) = 0.0
 		[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("__src", Float) = 1.0
@@ -66,20 +68,16 @@ Shader "A3/CurvedLitStencil"
 
 		Pass
 		{
-			Stencil 
-			{
-				Ref [_Mask]
-				Comp [_Comp]
-				Pass [_Pass]
-				Fail [_Fail]
-				ZFail [_ZFail]
-			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
+			#define _USE_ADDITIONAL
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -95,6 +93,8 @@ Shader "A3/CurvedLitStencil"
 			#pragma target 4.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
+			
+			
 			ENDCG
 		}
 		
@@ -105,6 +105,9 @@ Shader "A3/CurvedLitStencil"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT

@@ -1,9 +1,9 @@
-Shader "A3/CurvedLitStencil"
+Shader "A3/CurvedLitAdditionalMask"
 {
 	Properties
 	{
 		_Mask ("Mask", Int) = 1
-		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 0
+		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 8
 		[Enum(UnityEngine.Rendering.StencilOp)] _Pass ("Pass", Int) = 2
 		[Enum(UnityEngine.Rendering.StencilOp)] _Fail ("Fail", Int) = 0
 		[Enum(UnityEngine.Rendering.StencilOp)] _ZFail ("ZFail", Int) = 0
@@ -50,6 +50,9 @@ Shader "A3/CurvedLitStencil"
 		_RimPower( "Rim Power", Range( 0, 10.0 )) = 3.0
 		_RimLightTex ("Rim Tex", 2D) = "white" {}
 		[Space]
+		_AdditionalTex ("Additional Tex", 2D) = "white" {}
+		_AdditionalMask ("Additional Mask", 2D) = "white" {}
+		[Space]
 		// Blending state
 		_Mode ("__mode", Float) = 0.0
 		[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("__src", Float) = 1.0
@@ -62,6 +65,7 @@ Shader "A3/CurvedLitStencil"
 		Tags
 		{
 			"RenderType" = "Opaque"
+			"Queue" = "Transparent+3"
 		}
 
 		Pass
@@ -80,6 +84,7 @@ Shader "A3/CurvedLitStencil"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_ADDITIONAL
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -100,6 +105,14 @@ Shader "A3/CurvedLitStencil"
 		
 		Pass
 		{
+			Stencil 
+			{
+				Ref [_Mask]
+				Comp [_Comp]
+				Pass [_Pass]
+				Fail [_Fail]
+				ZFail [_ZFail]
+			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One

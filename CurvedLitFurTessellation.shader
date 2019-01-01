@@ -1,4 +1,4 @@
-Shader "A3/CurvedLitFur"
+Shader "A3/Tessellation/CurvedLitFur"
 {
 	Properties
 	{
@@ -52,6 +52,11 @@ Shader "A3/CurvedLitFur"
 		_FurLength ("FurLength", Range(0, 1)) = 0.03
 		_FurFact ("FurFact", Range(0, 10)) = 1
 		[Space]
+		_TessStrong("Tess Strong",Range( 0, 2 )) = 1
+		_TessDistMin("Tess Dist Min",Float) = 0.2
+		_TessDistMax("Tess Dist Max",Float) = 2
+		_TessFactor("Tess Factor",Range( 0, 64 )) = 16
+		[Space]
 		// Blending state
 		_Mode ("__mode", Float) = 0.0
 		[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("__src", Float) = 1.0
@@ -74,6 +79,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -100,6 +108,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.1
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -126,6 +137,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.2
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -152,6 +166,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.3
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -178,6 +195,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.4
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -204,6 +224,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.5
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -230,6 +253,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.6
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -256,6 +282,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.7
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -282,6 +311,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.8
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -308,6 +340,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.9
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -334,6 +369,9 @@ Shader "A3/CurvedLitFur"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 1
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
@@ -360,6 +398,9 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
@@ -381,6 +422,9 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.1
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
@@ -402,6 +446,9 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.2
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
@@ -423,6 +470,9 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.3
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
@@ -444,6 +494,9 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.4
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
@@ -486,6 +539,9 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.6
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
@@ -507,6 +563,9 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.7
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
@@ -528,6 +587,9 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.8
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
@@ -549,6 +611,9 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 0.9
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
@@ -570,6 +635,9 @@ Shader "A3/CurvedLitFur"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_TESSELLATION
+			#pragma hull hull
+			#pragma domain domain
 			#define _FURNUM 1
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
