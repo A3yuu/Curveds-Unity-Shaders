@@ -173,6 +173,7 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			#define _USE_ADDITIONALFRILL
 			#define _USE_NORMALMAP
 			#define _USE_TESSELLATION
+			#define _TESSELLATION_QUAD
 			#define _USE_TESS_MAP
 			#pragma hull hull
 			#pragma domain domain
@@ -189,7 +190,7 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
 			
@@ -272,6 +273,7 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			#define _USE_ADDITIONALFRILL
 			#define _USE_NORMALMAP
 			#define _USE_TESSELLATION
+			#define _TESSELLATION_QUAD
 			#define _USE_TESS_MAP
 			#pragma hull hull
 			#pragma domain domain
@@ -284,7 +286,7 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 			ENDCG

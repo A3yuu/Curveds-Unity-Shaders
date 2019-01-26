@@ -13,11 +13,13 @@ Copyright (c) 2017 Nicholas Benge
 * Tessellation(メッシュ細かく)
 * 自アバター用実装その1~4(Additional***)
 * 自アバター用実装髪用(Hair)
+* Geom版(多分軽い)ファー
+* アウトライン(てきとう)
 
 IndirectLightingあたりの実装とか見るととってもなごってるはず。  
-代表的な削った機能としては、アウトライン(つらい)、Trans/Fade(Zバッファでやるやつって半透明無理だよね･･･)
+代表的な削った機能としては、Trans/Fade(Zバッファでやるやつって半透明無理だよね･･･)
 
-ファーは下のやつなど参考に実装
+Geomじゃないファーは下のやつなど参考に実装
 * ファーシェーダを移植してみた(ファーシェーダー作成時に参考)  
 <https://qiita.com/edo_m18/items/75db04f117355adcadbb>
 
@@ -27,4 +29,4 @@ Stencilは以下などを参考、Windowについてはほぼコピペ
 <https://github.com/hecomi/HoloLensPlayground>  
 Copyright (c) 2017 hecomi
 
-コード参考にするなら、一つ前のが見やすいかも？
+コード参考にするなら、2018年分が見やすいかも？
