@@ -1,4 +1,4 @@
-Shader "A3/Mask/CurvedLitAdditional"
+Shader "A3/Mask/CurvedLitFurGeom"
 {
 	Properties
 	{
@@ -47,8 +47,13 @@ Shader "A3/Mask/CurvedLitAdditional"
 		_RimPower( "Rim Power", Range( 0, 10.0 )) = 3.0
 		_RimLightTex ("Rim Tex", 2D) = "white" {}
 		[Space]
-		_AdditionalTex ("Additional Tex", 2D) = "white" {}
-		_AdditionalMask ("Additional Mask", 2D) = "white" {}
+		_FurMap  ("FurMap", 2D) = "white" {}
+		[Toggle(_USE_FURTEX)]
+		_UseFurTex("Use FurTex", Float) = 0
+		_FurTex  ("FurTex", 2D) = "white" {}
+		_FurGravity ("FurGravity", Vector) = (0.0, 9.8, 0.0, 0.0)
+		_FurLength ("FurLength", Range(0, 1)) = 0.03
+		_FurFact ("FurFact", Range(0, 10)) = 1
 		[Space]
 		// Blending state
 		_Mode ("__mode", Float) = 0.0
@@ -77,7 +82,7 @@ Shader "A3/Mask/CurvedLitAdditional"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
-			#define _USE_ADDITIONAL
+			#define _USE_GEOM_FUR 9
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -85,16 +90,16 @@ Shader "A3/Mask/CurvedLitAdditional"
 			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _USE_HIGHLIGHT
 			#pragma shader_feature _USE_HAIRLIGHT
+			#pragma shader_feature _USE_FURTEX
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
+			#pragma geometry geom
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
 			#pragma target 4.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
-			
-			
 			ENDCG
 		}
 		
@@ -110,12 +115,15 @@ Shader "A3/Mask/CurvedLitAdditional"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_GEOM_FUR 9
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_FURTEX
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
+			#pragma geometry geom
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
 			#pragma target 4.0

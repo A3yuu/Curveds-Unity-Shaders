@@ -2,6 +2,9 @@ Shader "A3/CurvedLitMask"
 {
 	Properties
 	{
+		_Mask("Mask", Int) = 1
+		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 3
+		[Space]
 		[Enum(UnityEngine.Rendering.CullMode)] _Cull("Culling", Int) = 2
 		_MainTex("MainTex", 2D) = "white" {}
 		_Color("Color", Color) = (1,1,1,1)
@@ -43,9 +46,6 @@ Shader "A3/CurvedLitMask"
 		_RimColor( "Rim Color", Color ) = ( 1.0, 1.0, 1.0, 1.0 )
 		_RimPower( "Rim Power", Range( 0, 10.0 )) = 3.0
 		_RimLightTex ("Rim Tex", 2D) = "white" {}
-		[Space]
-		_Mask("Mask", Int) = 1
-		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 0
 		[Space]
 		// Blending state
 		_Mode ("__mode", Float) = 0.0

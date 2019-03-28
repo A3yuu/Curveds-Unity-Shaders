@@ -4,6 +4,8 @@
 #include "AutoLight.cginc"
 #include "Lighting.cginc"
 
+#define PI 3.14159265358979
+
 uniform sampler2D _MainTex; uniform float4 _MainTex_ST;
 uniform sampler2D _EmissionMap; uniform float4 _EmissionMap_ST;
 uniform sampler2D _NormalMap; uniform float4 _NormalMap_ST;
@@ -31,9 +33,7 @@ uniform sampler2D _HairLightTex; uniform float4 _HairLightTex_ST;
 
 #if defined(_USE_HAIRHIGHT) || defined(_USE_GEOM_HAIR)
 uniform sampler2D _HairHightTex; uniform float4 _HairHightTex_ST;
-uniform sampler2D _HairHightTex2; uniform float4 _HairHightTex2_ST;
 uniform float _HairHightNum;
-uniform float _HairCut;
 uniform float _HairWind;
 #endif
 
@@ -51,6 +51,27 @@ uniform float _FurFact;
 uniform float _OutlineWidth;
 uniform float4 _OutlineColor;
 #endif
+
+#if defined(_USE_BILLBOARD)
+uniform float _BillboardZ;
+float4 billboard(float4 vertex){
+	float3 viewDir2 = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1.0));
+	viewDir2.y = 0;
+	viewDir2 = normalize(viewDir2);
+	#if defined(_BILLBOARD_NUM)
+	float c = atan2(viewDir2.x, viewDir2.z);
+	int cc = (c/2/PI+0.5)*_BillboardDiv+0.5;
+	c = (cc/_BillboardDiv-0.5)*2*PI;
+	viewDir2 = float3(sin(c),0,cos(c));
+	#endif
+	float len = dot(viewDir2, vertex);
+	return vertex - float4(viewDir2,0) * len * (1-_BillboardZ);
+}
+#endif
+#if defined(_BILLBOARD_NUM)
+uniform float _BillboardDiv;
+#endif
+
 
 #if defined(_USE_ADDITIONAL)
 uniform sampler2D _AdditionalTex; uniform float4 _AdditionalTex_ST;
@@ -157,13 +178,20 @@ VertexOutput vert(appdata_full v) {
 	#elif defined (_USE_ADDITIONALSKIRT)
 	o.vertex = float4(v.vertex.xyz - normalize(v.normal) * _AdditionalLaceNum * (1-v.texcoord.y)*(1-v.texcoord.y), 1.0);
 	#endif
+	//Billboard
+	#if defined(_USE_BILLBOARD)
+	#if defined(_TESSELLATION_QUAD) || defined(_USE_GEOM_HAIR) || defined(_USE_GEOM_FUR) 
+	#else
+	o.vertex = billboard(o.vertex);
+	#endif
+	#endif
 	//åvéZ
 	o.pos = UnityObjectToClipPos(o.vertex);
 	o.posWorld = mul(unity_ObjectToWorld, o.vertex);
 	//êF
 	o.col = _Color * v.color;
 	#if defined(_USE_ADDITIONAL4)
-	o.col = _AdditionalColor * v.color
+	o.col = _AdditionalColor * v.color;
 	#endif
 	//äeéÌäpìx
 	o.viewDir = normalize(_WorldSpaceCameraPos.xyz - o.posWorld.xyz);
@@ -192,14 +220,6 @@ float4 frag(VertexOutput i) : COLOR
 	#if defined(_USE_GEOM_FUR)
 	clip(tex2D(_FurMap, i.uv1).r - i.furNum);
 	#endif
-	
-	//HairHight
-	#if defined(_USE_HAIRHIGHT)
-	clip(tex2D(_HairHightTex2, i.uv0).r - max(_USE_HAIRHIGHT, _HairCut));
-	#endif
-	#if defined(_USE_GEOM_HAIR)
-	clip(tex2D(_HairHightTex2, i.uv0).r - max(i.furNum, _HairCut));
-	#endif
 
 	//Bace
 	float3 objPos = i.posWorld.xyz;
@@ -226,6 +246,7 @@ float4 frag(VertexOutput i) : COLOR
 	#if defined(_USE_ADDITIONALSKIRT)
 	baseColor = tex2D(_AdditionalLace,TRANSFORM_TEX(i.uv0, _AdditionalLace))*i.col;
 	clip (max(baseColor.a-fmod(i.uv0.x,0.0005)*2000,baseColor.a-fmod(i.uv0.y,0.0005)*2000)-0.001);
+	baseColor.a = 1;
 	#endif
 	#if defined(_USE_ADDITIONALFRILL)
 	baseColor = i.col;
@@ -255,6 +276,13 @@ float4 frag(VertexOutput i) : COLOR
 	//Cutoff
 	#if defined(_ALPHATEST_ON)
 	clip (baseColor.a - _Cutoff);
+	#endif
+	//HairHight
+	#if defined(_USE_HAIRHIGHT)
+	clip(baseColor.a - max(_USE_HAIRHIGHT, _Cutoff));
+	#endif
+	#if defined(_USE_GEOM_HAIR)
+	clip(baseColor.a - max(i.furNum, _Cutoff));
 	#endif
 
 	//Emission
@@ -364,6 +392,11 @@ void geom(triangle VertexOutput i[3], inout TriangleStream<VertexOutput> tristre
 			VertexOutput o = i[k];
 			o.furNum = 1.0*j/_USE_GEOM_FUR;
 			o.vertex += float4(normalize(o.normalDirOrg + o.furNum * (1 - o.furNum * 0.5) * _FurGravity.xyz) * o.furNum * _FurLength, 0);
+			//BILLBOARD
+			#if defined(_USE_BILLBOARD)
+			o.vertex = billboard(o.vertex);
+			#endif
+			//åvéZ
 			o.pos = UnityObjectToClipPos(o.vertex);
 			o.posWorld = mul(unity_ObjectToWorld, o.vertex);
 			tristream.Append(o);
@@ -385,7 +418,12 @@ void geom(triangle VertexOutput i[3], inout TriangleStream<VertexOutput> tristre
 			o.furNum = j/(_USE_GEOM_HAIR-1.0);
 			float hairHight = tex2Dlod(_HairHightTex, float4(o.uv0,0,0)).r * o.furNum * _HairHightNum;
 			float3 hairNormalAdder = sin(_Time.x*2) * normalize(o.tangentDirOrg.xyz) + cos(_Time.x*2) * normalize(cross(o.normalDirOrg.xyz, o.tangentDirOrg.xyz));
-			o.vertex += float4((o.normalDirOrg + hairNormalAdder * _HairWind) * hairHight, 1.0);
+			o.vertex += float4((o.normalDirOrg + hairNormalAdder * _HairWind) * hairHight, 0);
+			//BILLBOARD
+			#if defined(_USE_BILLBOARD)
+			o.vertex = billboard(o.vertex);
+			#endif
+			//åvéZ
 			o.pos = UnityObjectToClipPos(o.vertex);
 			o.posWorld = mul(unity_ObjectToWorld, o.vertex);
 			tristream.Append(o);
@@ -492,6 +530,11 @@ VertexOutput domain(TessellationFactor hullConst, const OutputPatch<VertexOutput
 	#endif
 	o.vertex += float4(o.normalDirOrg,0)*_TessHightMap_var*_TessHightRate;
 	#endif
+	//BILLBOARD
+	#if defined(_USE_BILLBOARD)
+	o.vertex = billboard(o.vertex);
+	#endif
+	//åvéZ
 	o.pos = UnityObjectToClipPos(o.vertex);
 	o.posWorld = mul(unity_ObjectToWorld, o.vertex);
 	

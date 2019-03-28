@@ -40,8 +40,6 @@ Shader "A3/CurvedLitHairGeom"
 		[Space]
 		_HairHightNum( "HairHight Num", Range( 0, 10.0 )) = 1.0
 		_HairHightTex ("HairHight Tex", 2D) = "white" {}
-		_HairHightTex2 ("HairHight Tex2", 2D) = "white" {}
-		_HairCut( "HairCut", Range( 0, 1.0 )) = 0.0
 		_HairWind( "HairWind", Range( 0, 10.0 )) = 1.0
 		[Space]
 		[Toggle(_USE_RIM)]
@@ -61,7 +59,7 @@ Shader "A3/CurvedLitHairGeom"
 	{
 		Tags
 		{
-			"RenderType" = "Opaque"
+			"RenderType" = "TransparentCutout"
 		}
 
 		Pass
@@ -114,5 +112,5 @@ Shader "A3/CurvedLitHairGeom"
 			ENDCG
 		}
 	}
-	FallBack "Diffuse"
+	FallBack "Transparent/Cutout/Diffuse"
 }

@@ -1,9 +1,9 @@
-Shader "A3/CurvedLitStencil"
+Shader "A3/CurvedLitWindow"
 {
 	Properties
 	{
 		_Mask ("Mask", Int) = 1
-		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 0
+		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 8
 		[Enum(UnityEngine.Rendering.StencilOp)] _Pass ("Pass", Int) = 2
 		[Enum(UnityEngine.Rendering.StencilOp)] _Fail ("Fail", Int) = 0
 		[Enum(UnityEngine.Rendering.StencilOp)] _ZFail ("ZFail", Int) = 0

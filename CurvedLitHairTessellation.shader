@@ -93,7 +93,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
 			ENDCG
@@ -122,7 +122,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
 			ENDCG
@@ -136,8 +136,8 @@ Shader "A3/Tessellation/CurvedLitHair"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_TESSELLATION
-			#pragma hull HS
-			#pragma domain DS
+			#pragma hull hull
+			#pragma domain domain
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -151,7 +151,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
 			ENDCG
@@ -165,8 +165,8 @@ Shader "A3/Tessellation/CurvedLitHair"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_TESSELLATION
-			#pragma hull HS
-			#pragma domain DS
+			#pragma hull hull
+			#pragma domain domain
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -180,7 +180,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
 			ENDCG
@@ -194,8 +194,8 @@ Shader "A3/Tessellation/CurvedLitHair"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_TESSELLATION
-			#pragma hull HS
-			#pragma domain DS
+			#pragma hull hull
+			#pragma domain domain
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -209,7 +209,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
 			ENDCG
@@ -223,8 +223,8 @@ Shader "A3/Tessellation/CurvedLitHair"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_TESSELLATION
-			#pragma hull HS
-			#pragma domain DS
+			#pragma hull hull
+			#pragma domain domain
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -238,7 +238,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
 			ENDCG
@@ -252,8 +252,8 @@ Shader "A3/Tessellation/CurvedLitHair"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_TESSELLATION
-			#pragma hull HS
-			#pragma domain DS
+			#pragma hull hull
+			#pragma domain domain
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
@@ -263,7 +263,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 			ENDCG
@@ -276,8 +276,8 @@ Shader "A3/Tessellation/CurvedLitHair"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_TESSELLATION
-			#pragma hull HS
-			#pragma domain DS
+			#pragma hull hull
+			#pragma domain domain
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
@@ -287,7 +287,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 			ENDCG
@@ -300,8 +300,8 @@ Shader "A3/Tessellation/CurvedLitHair"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_TESSELLATION
-			#pragma hull HS
-			#pragma domain DS
+			#pragma hull hull
+			#pragma domain domain
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
@@ -311,7 +311,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 			ENDCG
@@ -324,8 +324,8 @@ Shader "A3/Tessellation/CurvedLitHair"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_TESSELLATION
-			#pragma hull HS
-			#pragma domain DS
+			#pragma hull hull
+			#pragma domain domain
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
@@ -335,7 +335,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 			ENDCG
@@ -348,8 +348,8 @@ Shader "A3/Tessellation/CurvedLitHair"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_TESSELLATION
-			#pragma hull HS
-			#pragma domain DS
+			#pragma hull hull
+			#pragma domain domain
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
@@ -359,7 +359,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 			ENDCG
@@ -372,8 +372,8 @@ Shader "A3/Tessellation/CurvedLitHair"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_TESSELLATION
-			#pragma hull HS
-			#pragma domain DS
+			#pragma hull hull
+			#pragma domain domain
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
@@ -383,7 +383,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 			ENDCG

@@ -75,6 +75,7 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			"RenderType" = "TransparentCutout"
 		}
 
+		//main
 		Pass
 		{
 			Name "FORWARD"
@@ -84,7 +85,6 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_ADDITIONAL
-			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -104,6 +104,7 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			
 			ENDCG
 		}
+		//add
 		Pass
 		{
 			Name "FORWARD"
@@ -113,7 +114,6 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _USE_ADDITIONALADD
-			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -133,6 +133,7 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			
 			ENDCG
 		}
+		//lace
 		Pass
 		{
 			Name "FORWARD"
@@ -162,6 +163,7 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			
 			ENDCG
 		}
+		//tess
 		Pass
 		{
 			Name "FORWARD"
@@ -177,7 +179,6 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			#define _USE_TESS_MAP
 			#pragma hull hull
 			#pragma domain domain
-			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -206,7 +207,6 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			Cull [_Cull]
 			CGPROGRAM
 			#define _PASS_FORWARDADD
-			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
@@ -228,7 +228,6 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			CGPROGRAM
 			#define _USE_ADDITIONALADD
 			#define _PASS_FORWARDADD
-			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
@@ -250,7 +249,6 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			CGPROGRAM
 			#define _USE_ADDITIONALSKIRT
 			#define _PASS_FORWARDADD
-			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
@@ -278,7 +276,6 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			#pragma hull hull
 			#pragma domain domain
 			#define _PASS_FORWARDADD
-			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
@@ -292,5 +289,5 @@ Shader "A3/CurvedLitAdditionalSkirt"
 			ENDCG
 		}
 	}
-	FallBack "Diffuse"
+	FallBack "Transparent/Cutout/Diffuse"
 }

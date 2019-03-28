@@ -90,7 +90,7 @@ Shader "A3/Tessellation/CurvedLitAdditional"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
 			
@@ -116,7 +116,7 @@ Shader "A3/Tessellation/CurvedLitAdditional"
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
-			#pragma target 4.0
+			#pragma target 5.0
 			#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 			ENDCG

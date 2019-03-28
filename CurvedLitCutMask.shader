@@ -1,9 +1,9 @@
-Shader "A3/Mask/CurvedLitAdditional"
+Shader "A3/Mask/CurvedLitCut4004"
 {
 	Properties
 	{
-		_Mask("Mask", Int) = 1
-		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 3
+		_Mask ("Mask", Int) = 1
+		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 8
 		[Space]
 		[Enum(UnityEngine.Rendering.CullMode)] _Cull("Culling", Int) = 2
 		_MainTex("MainTex", 2D) = "white" {}
@@ -47,9 +47,6 @@ Shader "A3/Mask/CurvedLitAdditional"
 		_RimPower( "Rim Power", Range( 0, 10.0 )) = 3.0
 		_RimLightTex ("Rim Tex", 2D) = "white" {}
 		[Space]
-		_AdditionalTex ("Additional Tex", 2D) = "white" {}
-		_AdditionalMask ("Additional Mask", 2D) = "white" {}
-		[Space]
 		// Blending state
 		_Mode ("__mode", Float) = 0.0
 		[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("__src", Float) = 1.0
@@ -62,6 +59,7 @@ Shader "A3/Mask/CurvedLitAdditional"
 		Tags
 		{
 			"RenderType" = "Opaque"
+			"Queue" = "Transparent+4"
 		}
 
 		Pass
@@ -77,14 +75,13 @@ Shader "A3/Mask/CurvedLitAdditional"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
-			#define _USE_ADDITIONAL
+			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
 			#pragma shader_feature _USE_EMISSION
 			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _USE_HIGHLIGHT
-			#pragma shader_feature _USE_HAIRLIGHT
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -93,23 +90,17 @@ Shader "A3/Mask/CurvedLitAdditional"
 			#pragma target 4.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
-			
-			
 			ENDCG
 		}
 		
 		Pass
 		{
-			Stencil 
-			{
-				Ref [_Mask]
-				Comp [_Comp]
-			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _ALPHATEST_ON
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT

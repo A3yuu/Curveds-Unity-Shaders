@@ -1,4 +1,4 @@
-Shader "A3/Mask/CurvedLitAdditional"
+Shader "A3/Mask/CurvedLitAdditional4004"
 {
 	Properties
 	{
@@ -62,6 +62,7 @@ Shader "A3/Mask/CurvedLitAdditional"
 		Tags
 		{
 			"RenderType" = "Opaque"
+			"Queue" = "Transparent+4"
 		}
 
 		Pass

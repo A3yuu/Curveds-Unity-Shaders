@@ -1,4 +1,4 @@
-Shader "A3/Mask/CurvedLitAdditional"
+Shader "A3/Mask/CurvedLitHairGeom4004"
 {
 	Properties
 	{
@@ -41,14 +41,17 @@ Shader "A3/Mask/CurvedLitAdditional"
 		_HairLightColor( "HairLight Color", Color ) = ( 1.0, 1.0, 1.0, 1.0 )
 		_HairLightTex ("HairLight Tex", 2D) = "white" {}
 		[Space]
+		_HairHightNum( "HairHight Num", Range( 0, 10.0 )) = 1.0
+		_HairHightTex ("HairHight Tex", 2D) = "white" {}
+		_HairHightTex2 ("HairHight Tex2", 2D) = "white" {}
+		_HairCut( "HairCut", Range( 0, 1.0 )) = 0.0
+		_HairWind( "HairWind", Range( 0, 10.0 )) = 1.0
+		[Space]
 		[Toggle(_USE_RIM)]
 		_UseRim("Use Rim", Float) = 0
 		_RimColor( "Rim Color", Color ) = ( 1.0, 1.0, 1.0, 1.0 )
 		_RimPower( "Rim Power", Range( 0, 10.0 )) = 3.0
 		_RimLightTex ("Rim Tex", 2D) = "white" {}
-		[Space]
-		_AdditionalTex ("Additional Tex", 2D) = "white" {}
-		_AdditionalMask ("Additional Mask", 2D) = "white" {}
 		[Space]
 		// Blending state
 		_Mode ("__mode", Float) = 0.0
@@ -62,6 +65,7 @@ Shader "A3/Mask/CurvedLitAdditional"
 		Tags
 		{
 			"RenderType" = "Opaque"
+			"Queue" = "Transparent+4"
 		}
 
 		Pass
@@ -77,7 +81,7 @@ Shader "A3/Mask/CurvedLitAdditional"
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
-			#define _USE_ADDITIONAL
+			#define _USE_GEOM_HAIR 6
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -88,16 +92,14 @@ Shader "A3/Mask/CurvedLitAdditional"
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
+			#pragma geometry geom
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
 			#pragma target 4.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
-			
-			
 			ENDCG
 		}
-		
 		Pass
 		{
 			Stencil 
@@ -110,12 +112,14 @@ Shader "A3/Mask/CurvedLitAdditional"
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_GEOM_HAIR 6
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
+			#pragma geometry geom
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
 			#pragma target 4.0

@@ -1,10 +1,7 @@
-Shader "A3/Mask/CurvedLitAdditional"
+Shader "A3/Billboard/CurvedLitHairGeom"
 {
 	Properties
 	{
-		_Mask("Mask", Int) = 1
-		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 3
-		[Space]
 		[Enum(UnityEngine.Rendering.CullMode)] _Cull("Culling", Int) = 2
 		_MainTex("MainTex", 2D) = "white" {}
 		_Color("Color", Color) = (1,1,1,1)
@@ -41,14 +38,22 @@ Shader "A3/Mask/CurvedLitAdditional"
 		_HairLightColor( "HairLight Color", Color ) = ( 1.0, 1.0, 1.0, 1.0 )
 		_HairLightTex ("HairLight Tex", 2D) = "white" {}
 		[Space]
+		_HairHightNum( "HairHight Num", Range( 0, 10.0 )) = 1.0
+		_HairHightTex ("HairHight Tex", 2D) = "white" {}
+		_HairHightTex2 ("HairHight Tex2", 2D) = "white" {}
+		_HairCut( "HairCut", Range( 0, 1.0 )) = 0.0
+		_HairWind( "HairWind", Range( 0, 10.0 )) = 1.0
+		[Space]
 		[Toggle(_USE_RIM)]
 		_UseRim("Use Rim", Float) = 0
 		_RimColor( "Rim Color", Color ) = ( 1.0, 1.0, 1.0, 1.0 )
 		_RimPower( "Rim Power", Range( 0, 10.0 )) = 3.0
 		_RimLightTex ("Rim Tex", 2D) = "white" {}
 		[Space]
-		_AdditionalTex ("Additional Tex", 2D) = "white" {}
-		_AdditionalMask ("Additional Mask", 2D) = "white" {}
+		_BillboardZ("Billboard Z", Float) = 0.001
+		[Toggle(_BILLBOARD_NUM)]
+		_BillboardNum("Use Div", Float) = 0
+		_BillboardDiv("Billboard Div", Int) = 8
 		[Space]
 		// Blending state
 		_Mode ("__mode", Float) = 0.0
@@ -66,18 +71,13 @@ Shader "A3/Mask/CurvedLitAdditional"
 
 		Pass
 		{
-			Stencil 
-			{
-				Ref [_Mask]
-				Comp [_Comp]
-			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
 			ZWrite [_ZWrite]
 			Cull [_Cull]
 			CGPROGRAM
-			#define _USE_ADDITIONAL
+			#define _USE_GEOM_HAIR 6
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_REFLECTION
 			#pragma shader_feature _USE_INDIRECTLIGHTING
@@ -85,37 +85,36 @@ Shader "A3/Mask/CurvedLitAdditional"
 			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _USE_HIGHLIGHT
 			#pragma shader_feature _USE_HAIRLIGHT
+			#define _USE_BILLBOARD
+			#pragma shader_feature _BILLBOARD_NUM
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
+			#pragma geometry geom
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
 			#pragma target 4.0
 			#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
-			
-			
 			ENDCG
 		}
-		
 		Pass
 		{
-			Stencil 
-			{
-				Ref [_Mask]
-				Comp [_Comp]
-			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One
 			Cull [_Cull]
 			CGPROGRAM
+			#define _USE_GEOM_HAIR 6
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#define _USE_BILLBOARD
+			#pragma shader_feature _BILLBOARD_NUM
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
+			#pragma geometry geom
 			#pragma fragment frag
 			#pragma only_renderers d3d11 glcore gles
 			#pragma target 4.0

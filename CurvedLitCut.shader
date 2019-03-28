@@ -106,5 +106,5 @@ Shader "A3/CurvedLitCut"
 			ENDCG
 		}
 	}
-	FallBack "Diffuse"
+	FallBack "Transparent/Cutout/Diffuse"
 }
