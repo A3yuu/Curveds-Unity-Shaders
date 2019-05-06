@@ -15,6 +15,8 @@ Copyright (c) 2017 Nicholas Benge
 * 自アバター用実装髪用(Hair)
 * Geom版(多分軽い)ファー
 * アウトライン(てきとう)
+以下2019年5/6追加分
+* Billboard(Y軸方向にペラペラになる)
 
 IndirectLightingあたりの実装とか見るととってもなごってるはず。  
 代表的な削った機能としては、Trans/Fade(Zバッファでやるやつって半透明無理だよね･･･)

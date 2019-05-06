@@ -52,6 +52,9 @@ uniform float _OutlineWidth;
 uniform float4 _OutlineColor;
 #endif
 
+#if defined(_BILLBOARD_NUM)
+uniform float _BillboardDiv;
+#endif
 #if defined(_USE_BILLBOARD)
 uniform float _BillboardZ;
 float4 billboard(float4 vertex){
@@ -67,9 +70,6 @@ float4 billboard(float4 vertex){
 	float len = dot(viewDir2, vertex);
 	return vertex - float4(viewDir2,0) * len * (1-_BillboardZ);
 }
-#endif
-#if defined(_BILLBOARD_NUM)
-uniform float _BillboardDiv;
 #endif
 
 
