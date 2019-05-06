@@ -1,16 +1,12 @@
-Shader "Hanahuda/CurvedLit"
+Shader "A3/CurvedLitAdditionalSense"
 {
 	Properties
 	{
-		_Mask ("Mask", Int) = 1
-		[Enum(UnityEngine.Rendering.CompareFunction)] _Comp ("Comp", Int) = 8
-		[Enum(UnityEngine.Rendering.StencilOp)] _Pass ("Pass", Int) = 2
-		[Enum(UnityEngine.Rendering.StencilOp)] _Fail ("Fail", Int) = 0
-		[Enum(UnityEngine.Rendering.StencilOp)] _ZFail ("ZFail", Int) = 0
-		[Space]
 		[Enum(UnityEngine.Rendering.CullMode)] _Cull("Culling", Int) = 2
 		_MainTex("MainTex", 2D) = "white" {}
 		_Color("Color", Color) = (1,1,1,1)
+		[Space]
+		_AdditionalSense("AdditionalSense", 2D) = "white" {}
 		[Space]
 		_Shadow("Shadow", Range(0, 1)) = 0.4
 		_ShadowMag("Shadow Mag", Range(0, 10)) = 2.0
@@ -62,19 +58,10 @@ Shader "Hanahuda/CurvedLit"
 		Tags
 		{
 			"RenderType" = "Opaque"
-			"Queue" = "Transparent+3"
 		}
 
 		Pass
 		{
-			Stencil 
-			{
-				Ref [_Mask]
-				Comp [_Comp]
-				Pass [_Pass]
-				Fail [_Fail]
-				ZFail [_ZFail]
-			}
 			Name "FORWARD"
 			Tags { "LightMode" = "ForwardBase" }
 			Blend [_SrcBlend] [_DstBlend]
@@ -88,6 +75,7 @@ Shader "Hanahuda/CurvedLit"
 			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _USE_HIGHLIGHT
 			#pragma shader_feature _USE_HAIRLIGHT
+			#define _USE_ADDITIONALSENSE
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -101,14 +89,6 @@ Shader "Hanahuda/CurvedLit"
 		
 		Pass
 		{
-			Stencil 
-			{
-				Ref [_Mask]
-				Comp [_Comp]
-				Pass [_Pass]
-				Fail [_Fail]
-				ZFail [_ZFail]
-			}
 			Name "FORWARD_DELTA"
 			Tags { "LightMode" = "ForwardAdd" }
 			Blend [_SrcBlend] One

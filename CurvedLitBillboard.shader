@@ -103,6 +103,7 @@ Shader "A3/Billboard/CurvedLit"
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#define _USE_BILLBOARD
 			#pragma shader_feature _BILLBOARD_NUM
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON

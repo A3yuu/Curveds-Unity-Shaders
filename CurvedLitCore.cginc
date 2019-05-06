@@ -100,6 +100,9 @@ uniform float _AdditionalAddNum;
 #if defined(_USE_ADDITIONALFRILL)
 uniform sampler2D _AdditionalFrill; uniform float4 _AdditionalFrill_ST;
 #endif
+#if defined(_USE_ADDITIONALSENSE)
+uniform sampler2D _AdditionalSense; uniform float4 _AdditionalSense_ST;
+#endif
 
 
 static const half3 grayscale_vector = half3(0.298912, 0.586611, 0.114478);
@@ -370,6 +373,15 @@ float4 frag(VertexOutput i) : COLOR
 	//Additional2
 	#if defined(_USE_ADDITIONAL2)
 	clip(pow(_AdditionalNum,2) - tex2D(_AdditionalTex, i.uv0).r);
+	#endif
+	
+	//AdditionalSense
+	#if defined(_USE_ADDITIONALSENSE)
+	float4 objPosBase = mul(unity_ObjectToWorld, float4(0,0,0,1));
+	float hoge = objPosBase.x+objPosBase.y+objPosBase.z;
+	float2 xy = float2(objPosBase.x+i.uv0.x + _Time.x*0.5, objPosBase.z+i.uv0.y);
+	float4 additionalColor = tex2D(_AdditionalSense,TRANSFORM_TEX(xy, _AdditionalSense))*i.col;
+	baseColor.rgb = baseColor.rgb + additionalColor.rgb*additionalColor.a;
 	#endif
 
 	//Fin

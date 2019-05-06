@@ -238,6 +238,7 @@ Shader "A3/Mask/CurvedLitAdditionalSkirt4004"
 			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -265,6 +266,7 @@ Shader "A3/Mask/CurvedLitAdditionalSkirt4004"
 			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -292,6 +294,7 @@ Shader "A3/Mask/CurvedLitAdditionalSkirt4004"
 			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert
@@ -325,6 +328,7 @@ Shader "A3/Mask/CurvedLitAdditionalSkirt4004"
 			#define _ALPHATEST_ON
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
 			#pragma vertex vert

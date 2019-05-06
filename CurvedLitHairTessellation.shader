@@ -257,6 +257,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#define _USE_HAIRHIGHT 0
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
@@ -281,6 +282,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#define _USE_HAIRHIGHT 0.2
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
@@ -305,6 +307,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#define _USE_HAIRHIGHT 0.4
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
@@ -329,6 +332,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#define _USE_HAIRHIGHT 0.6
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
@@ -353,6 +357,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#define _USE_HAIRHIGHT 0.8
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
@@ -377,6 +382,7 @@ Shader "A3/Tessellation/CurvedLitHair"
 			#define _PASS_FORWARDADD
 			#pragma shader_feature _USE_NORMALMAP
 			#pragma shader_feature _USE_HIGHLIGHT
+			#pragma shader_feature _USE_RIM
 			#define _USE_HAIRHIGHT 1
 			#pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON
 			#include "CurvedLitCore.cginc"
